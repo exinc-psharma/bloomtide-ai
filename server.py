@@ -23,6 +23,14 @@ HF_API_KEY = os.getenv('HF_API_KEY', '')
 HF_MODEL = 'stabilityai/stable-diffusion-xl-base-1.0'
 HF_URL = f'https://router.huggingface.co/hf-inference/models/{HF_MODEL}'
 
+# ── Ensure data dirs exist (works with gunicorn too) ──
+os.makedirs(DATA_DIR, exist_ok=True)
+os.makedirs(IMAGES_DIR, exist_ok=True)
+for _f in [MESSAGES_FILE, BLOOMS_FILE]:
+    if not os.path.exists(_f):
+        with open(_f, 'w') as _fp:
+            json.dump([], _fp)
+
 # ── Helpers ──
 def read_json(filepath):
     try:
