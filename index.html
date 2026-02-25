@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="BloomTide AI — Where nature blooms with artificial intelligence. A creative platform for the Jam the Web competition." />
+  <title>BloomTide AI — Where Nature Blooms with AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+
+<body>
+
+  <!-- ████ PRELOADER ████ -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-ring"></div>
+      <span class="preloader-text">BloomTide<span class="accent-dot">.</span></span>
+    </div>
+  </div>
+
+  <!-- Cursor Glow (desktop) -->
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" role="progressbar" aria-hidden="true"></div>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob bg-blob-1" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-2" aria-hidden="true"></div>
+  <div class="bg-blob bg-blob-3" aria-hidden="true"></div>
+
+  <!-- ══════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#home" aria-label="BloomTide Home">BloomTide<span>.</span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#home" data-section="home">Home</a></li>
+        <li><a href="#about" data-section="about">About</a></li>
+        <li><a href="#features" data-section="features">Features</a></li>
+        <li><a href="#gallery" data-section="gallery">Gallery</a></li>
+        <li><a href="#testimonials" data-section="testimonials">Reviews</a></li>
+        <li><a href="/" data-section="" class="btn btn-primary nav-cta">Try Generator</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#features">Features</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#testimonials">Reviews</a>
+    <a href="/">Try Generator</a>
+  </nav>
+
+  <!-- ══════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════ -->
+  <section class="hero section" id="home">
+    <canvas id="hero-particles" class="hero-particles" aria-hidden="true"></canvas>
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left: Text -->
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="dot"></span>
+            🌸 Jam the Web 2025 — Competition Entry
+          </div>
+          <h1 class="hero-title">
+            Where Nature<br />
+            <span class="gradient-text">
+              <span id="typewriter-text" class="typewriter">Blooms with AI</span>
+            </span>
+          </h1>
+          <p class="hero-desc">
+            BloomTide AI turns your words into living art. Set the tide, feed a word to the AI, and watch unique blooms
+            grow — each one as unique as the tide that shaped it.
+          </p>
+          <div class="hero-actions">
+            <a href="/" class="btn btn-primary btn-ripple" id="hero-cta-primary">🌸 Try the Bloom Generator</a>
+            <a href="#about" class="btn btn-outline btn-ripple" id="hero-cta-secondary">Learn More →</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-num" data-count="3" data-suffix="">0</div>
+              <div class="stat-label">Theme Words</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" data-count="1000" data-suffix="+">0+</div>
+              <div class="stat-label">Possible Blooms</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-num" data-count="100" data-suffix="%">0%</div>
+              <div class="stat-label">Unique Every Time</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Visual Card -->
+        <div class="hero-visual">
+          <div class="hero-orb"></div>
+          <div class="glass-card hero-card-main tilt-card reveal">
+            <div class="icon-wrap">🌊</div>
+            <h3>Set the Tide. Let AI Bloom.</h3>
+            <p>Every word creates a bloom. Every tide shapes it differently. No two are ever the same.</p>
+          </div>
+          <!-- Floating mini cards (clickable!) -->
+          <a href="/" class="glass-card hero-float-card hero-float-1">
+            <span class="fc-icon">🌸</span>
+            <span>Bloom Generator Live</span>
+          </a>
+          <a href="#gallery" class="glass-card hero-float-card hero-float-2">
+            <span class="fc-icon">🌊</span>
+            <span>Community Bloom Tide</span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span>Scroll Down</span>
+    </div>
+  </section>
+
+  <!-- Wave Divider -->
+  <div class="wave-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path
+        d="M0 50L48 45C96 40 192 30 288 35C384 40 480 60 576 65C672 70 768 60 864 50C960 40 1056 30 1152 35C1248 40 1344 60 1392 70L1440 80V100H0Z"
+        fill="var(--bg)" />
+    </svg>
+  </div>
+
+  <!-- ══════════════════════════════════
+       ABOUT SECTION
+  ══════════════════════════════════ -->
+  <section class="section about-section" id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Left: Steps -->
+        <div class="about-visual reveal">
+          <div class="about-steps">
+            <div class="glass-card about-step reveal reveal-delay-1">
+              <div class="step-num">🌊</div>
+              <div class="step-text">
+                <h4>Set the Tide</h4>
+                <p>Drag the tide slider to choose the ocean's intensity — from calm shallows to powerful surges.</p>
+              </div>
+            </div>
+            <div class="glass-card about-step reveal reveal-delay-2">
+              <div class="step-num">🤖</div>
+              <div class="step-text">
+                <h4>Feed the AI</h4>
+                <p>Type any word — a feeling, a name, a dream. The AI transforms it into a unique seed for creation.</p>
+              </div>
+            </div>
+            <div class="glass-card about-step reveal reveal-delay-3">
+              <div class="step-num">🌸</div>
+              <div class="step-text">
+                <h4>Watch It Bloom</h4>
+                <p>A one-of-a-kind procedural flower takes shape, influenced by your word and the tide you set.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Text -->
+        <div class="about-text reveal reveal-delay-2">
+          <span class="section-tag">About BloomTide</span>
+          <h2 class="section-title">Three Words.<br /><span class="highlight">Infinite Possibilities.</span></h2>
+          <p class="section-subtitle" style="margin-bottom: 24px;">
+            <strong>Bloom. Tide. AI.</strong> — These three words are the soul of our project. We didn't just use them
+            as a theme — we made them the <em>entire mechanic</em> of the experience.
+          </p>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; margin-bottom: 32px;">
+            The <strong>Tide</strong> is your creative input — a slider that shapes the mood. The <strong>AI</strong> is
+            the engine that reads your word and the tide to generate something never seen before. The
+            <strong>Bloom</strong> is the result — a living, procedural flower that exists only because of your unique
+            combination.
+          </p>
+          <a href="/" class="btn btn-primary btn-ripple">Try It Now →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FEATURES SECTION
+  ══════════════════════════════════ -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-center">
+        <span class="section-tag reveal">How It Works</span>
+        <h2 class="section-title reveal reveal-delay-1">Powered by <span class="highlight">Creativity & Code</span></h2>
+        <p class="section-subtitle reveal reveal-delay-2">
+          Every bloom is generated using procedural algorithms — no two outputs are ever the same.
+        </p>
+      </div>
+      <div class="features-grid">
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-1">
+          <div class="feature-icon">🌊</div>
+          <h3>Tide-Driven Design</h3>
+          <p>The tide slider controls the mood — low tide creates delicate cool-toned petals, high tide unleashes bold,
+            tropical blooms.</p>
+        </div>
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-2">
+          <div class="feature-icon">🧬</div>
+          <h3>Procedural Generation</h3>
+          <p>A seeded random algorithm creates unique petal shapes, colors, stems, and centers — deterministic yet
+            infinite.</p>
+        </div>
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-3">
+          <div class="feature-icon">🤖</div>
+          <h3>AI Seed Engine</h3>
+          <p>Your word is hashed into a mathematical seed that the AI uses to determine every visual property of the
+            bloom.</p>
+        </div>
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-1">
+          <div class="feature-icon">🎨</div>
+          <h3>Canvas Rendering</h3>
+          <p>Each bloom is drawn in real-time on HTML Canvas using bezier curves, gradients, and layered petal systems.
+          </p>
+        </div>
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-2">
+          <div class="feature-icon">💾</div>
+          <h3>Backend Storage</h3>
+          <p>Your blooms are saved to our server. The community gallery grows as more people contribute their unique
+            creations.</p>
+        </div>
+        <div class="glass-card feature-card tilt-card reveal reveal-delay-3">
+          <div class="feature-icon">📱</div>
+          <h3>Fully Responsive</h3>
+          <p>From desktop to mobile — the generator, gallery, and every section adapts beautifully to any screen size.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       COMMUNITY BLOOM GALLERY
+  ══════════════════════════════════ -->
+  <section class="section gallery-section" id="gallery">
+    <div class="container">
+      <div class="section-center">
+        <span class="section-tag reveal">Community</span>
+        <h2 class="section-title reveal reveal-delay-1">The <span class="highlight">Bloom Tide</span> Gallery</h2>
+        <p class="section-subtitle reveal reveal-delay-2">Every bloom saved by users joins the ever-growing tide.
+          Explore the community's creations below.</p>
+      </div>
+      <div class="bloom-tide-gallery reveal" id="community-gallery">
+        <div class="btg-empty" id="btg-empty">
+          <span>🌱</span>
+          <p>No community blooms yet. <a href="/">Be the first to create one!</a></p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 32px;" class="reveal">
+        <a href="/" class="btn btn-primary btn-ripple">🌸 Create Your Bloom</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       TESTIMONIALS SECTION
+  ══════════════════════════════════ -->
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="section-center">
+        <span class="section-tag reveal">Reactions</span>
+        <h2 class="section-title reveal reveal-delay-1">What People <span class="highlight">Are Saying</span></h2>
+        <p class="section-subtitle reveal reveal-delay-2">First impressions from the creative community.</p>
+      </div>
+      <div class="testimonials-scroll">
+        <div class="glass-card testimonial-card">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"I typed my name and the bloom that appeared was beautiful — and it's mine forever. The
+            tide slider is such a clever idea!"</p>
+          <div class="tc-author">
+            <div class="tc-avatar">AK</div>
+            <div>
+              <div class="tc-name">Aryan Kumar</div>
+              <div class="tc-role">Web Developer</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card testimonial-card">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"The way all 3 words — Bloom, Tide, AI — are woven into a single interactive mechanic is
+            genius. Not just theming, it IS the experience."</p>
+          <div class="tc-author">
+            <div class="tc-avatar">PS</div>
+            <div>
+              <div class="tc-name">Priya Sharma</div>
+              <div class="tc-role">UI Designer</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card testimonial-card">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"Every bloom is unique — I've tried dozens of words and each one creates something
+            completely different. The procedural art is mesmerizing."</p>
+          <div class="tc-author">
+            <div class="tc-avatar">RV</div>
+            <div>
+              <div class="tc-name">Rohan Verma</div>
+              <div class="tc-role">Creative Coder</div>
+            </div>
+          </div>
+        </div>
+        <div class="glass-card testimonial-card">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"The community gallery idea is brilliant. Watching the 'Bloom Tide' grow with everyone's
+            contributions is so satisfying."</p>
+          <div class="tc-author">
+            <div class="tc-avatar">NM</div>
+            <div>
+              <div class="tc-name">Neha Malhotra</div>
+              <div class="tc-role">Product Manager</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CTA SECTION
+  ══════════════════════════════════ -->
+  <section class="section cta-section" id="cta">
+    <div class="container">
+      <div class="cta-card glass-card reveal">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <h2 class="section-title" style="text-align: center;">Ready to Create<br /><span class="highlight">Your Unique
+            Bloom?</span></h2>
+        <p
+          style="text-align: center; color: var(--text-muted); max-width: 500px; margin: 0 auto 32px; font-size: 1.05rem; line-height: 1.7;">
+          Every word creates a different bloom. Every tide shapes it differently. Try the generator and save your bloom
+          to the community tide.
+        </p>
+        <div style="text-align: center;">
+          <a href="/" class="btn btn-primary btn-ripple" style="font-size: 1.1rem; padding: 18px 36px;">🌸 Launch Bloom
+            Generator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CONTACT SECTION
+  ══════════════════════════════════ -->
+  <section class="section contact-section" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-info reveal">
+          <span class="section-tag">Get In Touch</span>
+          <h2 class="section-title">Let's <span class="highlight">Start a Conversation</span></h2>
+          <p>Have feedback about BloomTide AI? Want to collaborate or just say hello? We'd love to hear from you.</p>
+          <div class="contact-details">
+            <div class="glass-card contact-item">
+              <div class="ci-icon">📧</div>
+              <div class="ci-text">
+                <div class="ci-label">Email</div>
+                <div class="ci-val">hello@bloomtide.ai</div>
+              </div>
+            </div>
+            <div class="glass-card contact-item">
+              <div class="ci-icon">📍</div>
+              <div class="ci-text">
+                <div class="ci-label">Location</div>
+                <div class="ci-val">New Delhi, India</div>
+              </div>
+            </div>
+            <div class="glass-card contact-item">
+              <div class="ci-icon">⏰</div>
+              <div class="ci-text">
+                <div class="ci-label">Response Time</div>
+                <div class="ci-val">Within 24 hours</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="glass-card contact-form-card reveal reveal-delay-2">
+          <h3 class="form-title">Send Us a Message 💬</h3>
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="f-name">Your Name *</label>
+                <input type="text" id="f-name" name="name" class="form-input" placeholder="John Doe"
+                  autocomplete="name" />
+                <span class="field-error" id="err-name" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="f-email">Email Address *</label>
+                <input type="email" id="f-email" name="email" class="form-input" placeholder="john@email.com"
+                  autocomplete="email" />
+                <span class="field-error" id="err-email" role="alert"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-subject">Subject</label>
+              <select id="f-subject" name="subject" class="form-select">
+                <option value="">Choose a topic…</option>
+                <option value="feedback">Bloom Feedback</option>
+                <option value="collaboration">Collaboration</option>
+                <option value="bug">Bug Report</option>
+                <option value="general">General Inquiry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-message">Your Message *</label>
+              <textarea id="f-message" name="message" class="form-textarea"
+                placeholder="Tell us about your experience with BloomTide AI…"></textarea>
+              <span class="field-error" id="err-message" role="alert"></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-ripple form-submit" id="submit-btn">Send Message
+              🚀</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="brand-name">BloomTide AI</div>
+          <p>Set the Tide. Let AI Bloom. A creative platform where every word becomes a unique piece of living art.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Experience</h4>
+          <ul role="list">
+            <li><a href="/">Bloom Generator</a></li>
+            <li><a href="#gallery">Community Gallery</a></li>
+            <li><a href="#features">How It Works</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>The Theme</h4>
+          <ul role="list">
+            <li><a href="#about">🌸 Bloom</a></li>
+            <li><a href="#about">🌊 Tide</a></li>
+            <li><a href="#about">🤖 AI</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul role="list">
+            <li><a href="/">Try Generator</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 BloomTide AI. Built with ❤️ for the Jam the Web competition.</span>
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+          <a href="#" class="social-link" aria-label="GitHub">🐙</a>
+          <a href="#" class="social-link" aria-label="Instagram">📸</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite">
+    <span class="toast-icon">✅</span>
+    <span class="toast-msg"></span>
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
+
+  <script src="script.js"></script>
+  <script>
+    async function loadCommunityGallery() {
+      try {
+        const res = await fetch('/api/blooms');
+        const data = await res.json();
+        const grid = document.getElementById('community-gallery');
+        const empty = document.getElementById('btg-empty');
+        if (data.blooms && data.blooms.length > 0) {
+          empty.style.display = 'none';
+          data.blooms.slice(-12).reverse().forEach(b => {
+            const item = document.createElement('div');
+            item.className = 'bloom-gallery-item';
+            const img = document.createElement('img');
+            img.src = `/api/blooms/img/${b.image}`;
+            img.alt = `Bloom: ${(b.words || []).join(', ')}`;
+            img.loading = 'lazy';
+            img.style.cssText = 'width:100%;border-radius:12px;aspect-ratio:1;object-fit:cover;margin-bottom:8px;background:rgba(0,0,0,.2)';
+            item.appendChild(img);
+            const wd = document.createElement('div');
+            wd.className = 'bgi-word'; wd.textContent = (b.words || []).join(' · ');
+            item.appendChild(wd);
+            const td = document.createElement('div');
+            td.className = 'bgi-tide'; td.textContent = `🌊 Tide: ${b.tideLevel}%`;
+            item.appendChild(td);
+            grid.appendChild(item);
+          });
+        }
+      } catch { }
+    }
+    loadCommunityGallery();
+  </script>
+</body>
+
+</html>
