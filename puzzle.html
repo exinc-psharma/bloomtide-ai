@@ -424,12 +424,42 @@
         }
 
         .bloom-item {
+            position: relative;
             background: rgba(255, 255, 255, .04);
             border: 1px solid rgba(255, 255, 255, .08);
             border-radius: 14px;
             padding: 12px;
             text-align: center;
             transition: all .25s
+        }
+
+        .bloom-item .btn-delete {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 26px;
+            height: 26px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(239, 68, 68, .15);
+            color: #ef4444;
+            font-size: .8rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: all .2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2
+        }
+
+        .bloom-item:hover .btn-delete {
+            opacity: 1
+        }
+
+        .bloom-item .btn-delete:hover {
+            background: rgba(239, 68, 68, .4);
+            transform: scale(1.1)
         }
 
         .bloom-item:hover {
@@ -928,12 +958,26 @@
             try {
                 const res = await fetch('/api/blooms');
                 const data = await res.json();
+                bloomGrid.querySelectorAll('.bloom-item').forEach(el => el.remove());
                 if (data.blooms && data.blooms.length > 0) {
                     emptyGallery.style.display = 'none';
-                    bloomGrid.querySelectorAll('.bloom-item').forEach(el => el.remove());
                     data.blooms.slice(-12).reverse().forEach(b => {
                         const item = document.createElement('div');
                         item.className = 'bloom-item';
+                        // Delete button
+                        const del = document.createElement('button');
+                        del.className = 'btn-delete';
+                        del.textContent = '🗑️';
+                        del.title = 'Remove bloom';
+                        del.addEventListener('click', async () => {
+                            if (!confirm('Remove this bloom?')) return;
+                            try {
+                                await fetch(`/api/blooms/${b.id}`, { method: 'DELETE' });
+                                showToast('Bloom removed!', 'success');
+                                loadGallery();
+                            } catch { showToast('Could not remove.', 'error'); }
+                        });
+                        item.appendChild(del);
                         const mc = document.createElement('canvas');
                         mc.width = 160; mc.height = 160;
                         item.appendChild(mc);
@@ -948,6 +992,8 @@
                         bloomGrid.appendChild(item);
                         generateBloom(b.words || [b.word, '', ''], b.tideLevel, mc, 160);
                     });
+                } else {
+                    emptyGallery.style.display = '';
                 }
             } catch { }
         }
