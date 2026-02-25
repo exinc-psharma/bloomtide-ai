@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
-        content="BloomTide AI — Set the Tide, Let AI Bloom. Generate unique AI flowers from your words." />
+        content="BloomTide AI — Set the Tide, Let AI Bloom. Generate unique procedural flowers from your words." />
     <title>BloomTide AI — Set the Tide, Let AI Bloom</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,7 +47,6 @@
             border-radius: 99px
         }
 
-        /* ── Ocean Background ── */
         .ocean-bg {
             position: fixed;
             inset: 0;
@@ -126,7 +125,6 @@
             z-index: 0
         }
 
-        /* ── Layout ── */
         .page-content {
             position: relative;
             z-index: 1;
@@ -137,7 +135,6 @@
             padding: 24px
         }
 
-        /* ── Header ── */
         .site-header {
             text-align: center;
             margin-top: 40px;
@@ -168,7 +165,6 @@
             font-weight: 600
         }
 
-        /* ── Generator Card ── */
         .generator-card {
             background: rgba(255, 255, 255, .04);
             border: 1px solid rgba(255, 255, 255, .08);
@@ -188,7 +184,6 @@
             text-align: center
         }
 
-        /* ── Inputs ── */
         .input-group {
             margin-bottom: 20px
         }
@@ -231,7 +226,6 @@
             color: rgba(148, 163, 184, .5)
         }
 
-        /* ── Tide Slider with Wave Emoji Thumb ── */
         .tide-control {
             margin-bottom: 24px
         }
@@ -262,16 +256,13 @@
             cursor: pointer
         }
 
-        /* Wave emoji as slider thumb */
         .tide-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 36px;
             height: 36px;
             border: none;
             background: transparent;
-            cursor: pointer;
-            font-size: 28px;
-            position: relative
+            cursor: pointer
         }
 
         .tide-slider::-moz-range-thumb {
@@ -282,7 +273,6 @@
             cursor: pointer
         }
 
-        /* Custom wave thumb overlay */
         .tide-slider-wrap .wave-thumb {
             position: absolute;
             top: 50%;
@@ -305,93 +295,45 @@
             background-clip: text
         }
 
-        /* ── Image Display ── */
-        .bloom-display {
+        .canvas-wrap {
             display: flex;
             justify-content: center;
             margin-bottom: 24px;
-            position: relative;
-            min-height: 300px
+            position: relative
         }
 
-        .bloom-display img {
-            border-radius: 16px;
-            max-width: 100%;
-            border: 1px solid rgba(255, 255, 255, .08);
-            box-shadow: 0 8px 32px rgba(14, 165, 233, .15)
-        }
-
-        .bloom-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 300px;
+        #bloom-canvas {
             border-radius: 16px;
             background: radial-gradient(ellipse at center bottom, rgba(14, 165, 233, .08)0%, transparent 70%);
             border: 1px solid rgba(255, 255, 255, .06)
         }
 
-        .bloom-placeholder.hidden {
-            display: none
+        .canvas-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: .4;
+            transition: opacity .3s
         }
 
-        .bloom-placeholder span {
+        .canvas-placeholder.hidden {
+            opacity: 0
+        }
+
+        .canvas-placeholder span {
             font-size: 2.5rem;
             margin-bottom: 8px
         }
 
-        .bloom-placeholder p {
+        .canvas-placeholder p {
             font-size: .85rem;
             color: #64748b
         }
 
-        /* Loading spinner */
-        .bloom-loading {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 300px;
-            border-radius: 16px;
-            background: radial-gradient(ellipse at center bottom, rgba(14, 165, 233, .08)0%, transparent 70%);
-            border: 1px solid rgba(255, 255, 255, .06)
-        }
-
-        .bloom-loading.active {
-            display: flex
-        }
-
-        .spinner {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(14, 165, 233, .2);
-            border-top-color: #0ea5e9;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 16px
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        .bloom-loading p {
-            font-size: .9rem;
-            color: #94a3b8
-        }
-
-        .bloom-loading .loading-sub {
-            font-size: .75rem;
-            color: #475569;
-            margin-top: 4px
-        }
-
-        /* ── Buttons ── */
         .btn-row {
             display: flex;
             gap: 12px
@@ -426,7 +368,23 @@
             transform: none
         }
 
-        /* ── Gallery ── */
+        .btn-save {
+            background: rgba(236, 72, 153, .15);
+            border: 1px solid rgba(236, 72, 153, .3);
+            color: #ec4899
+        }
+
+        .btn-save:hover {
+            background: rgba(236, 72, 153, .25);
+            transform: translateY(-2px)
+        }
+
+        .btn-save:disabled {
+            opacity: .3;
+            cursor: not-allowed;
+            transform: none
+        }
+
         .gallery-section {
             max-width: 900px;
             width: 100%;
@@ -461,7 +419,7 @@
 
         .bloom-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 16px
         }
 
@@ -480,12 +438,9 @@
             transform: translateY(-3px)
         }
 
-        .bloom-item img {
+        .bloom-item canvas {
             border-radius: 10px;
             margin-bottom: 8px;
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
             background: rgba(0, 0, 0, .2)
         }
 
@@ -514,7 +469,6 @@
             margin-bottom: 8px
         }
 
-        /* ── Footer ── */
         .page-footer {
             margin-top: auto;
             padding: 24px 0;
@@ -533,7 +487,6 @@
             color: #ec4899
         }
 
-        /* ── Toast ── */
         .toast {
             position: fixed;
             bottom: 24px;
@@ -568,7 +521,6 @@
             border-color: #ef4444
         }
 
-        /* ── Responsive ── */
         @media(max-width:640px) {
             .generator-card {
                 padding: 24px;
@@ -584,7 +536,7 @@
             }
 
             .bloom-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr))
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr))
             }
 
             .site-header {
@@ -596,59 +548,48 @@
 
 <body>
 
-    <!-- Ocean Background -->
     <div class="ocean-bg" aria-hidden="true">
         <div class="ocean-glow-1"></div>
         <div class="ocean-glow-2"></div>
         <div class="ocean-glow-3"></div>
-        <div class="ocean-wave">
-            <svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <div class="ocean-wave"><svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none">
                 <path d="M0 60 C480 0 960 120 1440 60 C1920 0 2400 120 2880 60 V120 H0Z" fill="#0ea5e9" />
-            </svg>
-        </div>
-        <div class="ocean-wave">
-            <svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            </svg></div>
+        <div class="ocean-wave"><svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none">
                 <path d="M0 80 C480 20 960 100 1440 50 C1920 90 2400 30 2880 70 V120 H0Z" fill="#06b6d4" />
-            </svg>
-        </div>
-        <div class="ocean-wave">
-            <svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            </svg></div>
+        <div class="ocean-wave"><svg viewBox="0 0 2880 120" fill="none" xmlns="http://www.w3.org/2000/svg"
+                preserveAspectRatio="none">
                 <path d="M0 40 C480 100 960 20 1440 80 C1920 40 2400 90 2880 50 V120 H0Z" fill="#ec4899" />
-            </svg>
-        </div>
+            </svg></div>
     </div>
 
     <div class="page-content">
-        <!-- Header -->
         <header class="site-header">
             <div class="logo">BloomTide AI</div>
             <p class="tagline">Set the <em>Tide</em>. Let <em>AI</em> <em>Bloom</em>.</p>
         </header>
 
-        <!-- Generator Card -->
         <main class="generator-card">
             <h1 class="gen-title">🌸 Generate Your AI Bloom</h1>
 
-            <!-- 3 Word Inputs -->
             <div class="input-group">
                 <label class="input-label">Enter Your 3 Words</label>
                 <div class="words-row">
-                    <input type="text" id="word-1" class="word-input" placeholder="Word 1" maxlength="30"
+                    <input type="text" id="word-1" class="word-input" placeholder="e.g. Red" maxlength="30"
                         autocomplete="off" />
-                    <input type="text" id="word-2" class="word-input" placeholder="Word 2" maxlength="30"
+                    <input type="text" id="word-2" class="word-input" placeholder="e.g. Fire" maxlength="30"
                         autocomplete="off" />
-                    <input type="text" id="word-3" class="word-input" placeholder="Word 3" maxlength="30"
+                    <input type="text" id="word-3" class="word-input" placeholder="e.g. Wild" maxlength="30"
                         autocomplete="off" />
                 </div>
             </div>
 
-            <!-- Tide Slider -->
             <div class="input-group tide-control">
                 <label class="input-label">Set the Tide Level</label>
-                <div class="tide-labels">
-                    <span>🌊 Low Tide</span>
-                    <span>High Tide 🌊</span>
-                </div>
+                <div class="tide-labels"><span>🌊 Low Tide</span><span>High Tide 🌊</span></div>
                 <div class="tide-slider-wrap">
                     <input type="range" id="tide-slider" class="tide-slider" min="0" max="100" value="50" />
                     <span class="wave-thumb" id="wave-thumb">🌊</span>
@@ -656,148 +597,333 @@
                 <div class="tide-value" id="tide-value">Tide: 50%</div>
             </div>
 
-            <!-- AI-Generated Image Display -->
-            <div class="bloom-display" id="bloom-display">
-                <div class="bloom-placeholder" id="bloom-placeholder">
+            <div class="canvas-wrap">
+                <canvas id="bloom-canvas" width="400" height="400"></canvas>
+                <div class="canvas-placeholder" id="canvas-placeholder">
                     <span>🌱</span>
                     <p>Your AI bloom will appear here</p>
                 </div>
-                <div class="bloom-loading" id="bloom-loading">
-                    <div class="spinner"></div>
-                    <p>AI is creating your bloom…</p>
-                    <span class="loading-sub">This may take 15–30 seconds</span>
-                </div>
             </div>
 
-            <!-- Button -->
             <div class="btn-row">
-                <button class="btn btn-generate" id="btn-generate">🌸 Generate Bloom with AI</button>
+                <button class="btn btn-generate" id="btn-generate">🌸 Generate Bloom</button>
+                <button class="btn btn-save" id="btn-save" disabled>💾 Save to Gallery</button>
             </div>
         </main>
 
-        <!-- Community Gallery -->
         <section class="gallery-section">
             <div class="gallery-header">
                 <div class="gallery-title">🌊 The Bloom Tide — Community Gallery</div>
                 <a href="/main" class="gallery-link">Visit Full Site →</a>
             </div>
             <div class="bloom-grid" id="bloom-grid">
-                <div class="empty-gallery" id="empty-gallery">
-                    <span>🌱</span>
+                <div class="empty-gallery" id="empty-gallery"><span>🌱</span>
                     <p>No blooms yet. Be the first to create one!</p>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="page-footer">
             <p>Built with ❤️ for the <a href="/main">Jam the Web</a> competition — BloomTide AI © 2025</p>
         </footer>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast" role="alert"><span class="toast-icon"></span><span class="toast-msg"></span></div>
 
     <script>
-        /* ====================================
-           BLOOMTIDE AI — AI Bloom Generator
-           ==================================== */
+        /* ================================================================
+           BLOOMTIDE AI — Smart Procedural Bloom Engine
+           Words directly influence: colors, petal shapes, size, mood
+           ================================================================ */
 
-        const word1Input = document.getElementById('word-1');
-        const word2Input = document.getElementById('word-2');
-        const word3Input = document.getElementById('word-3');
+        const canvas = document.getElementById('bloom-canvas');
+        const ctx = canvas.getContext('2d');
+        const w1Input = document.getElementById('word-1');
+        const w2Input = document.getElementById('word-2');
+        const w3Input = document.getElementById('word-3');
         const tideSlider = document.getElementById('tide-slider');
         const tideValueEl = document.getElementById('tide-value');
         const waveThumb = document.getElementById('wave-thumb');
         const btnGenerate = document.getElementById('btn-generate');
-        const bloomDisplay = document.getElementById('bloom-display');
-        const placeholder = document.getElementById('bloom-placeholder');
-        const loadingEl = document.getElementById('bloom-loading');
+        const btnSave = document.getElementById('btn-save');
+        const placeholder = document.getElementById('canvas-placeholder');
         const bloomGrid = document.getElementById('bloom-grid');
         const emptyGallery = document.getElementById('empty-gallery');
+
+        let currentBloom = null;
+
+        // ── Color Word Dictionary — maps user words to hue values ──
+        const COLOR_MAP = {
+            red: 0, crimson: 350, scarlet: 5, ruby: 355, cherry: 0, blood: 0, fire: 15, flame: 20,
+            orange: 30, amber: 35, copper: 25, rust: 20, tangerine: 30, peach: 25,
+            yellow: 55, gold: 50, golden: 50, lemon: 55, sunshine: 50, honey: 45, sunflower: 48,
+            green: 120, emerald: 140, lime: 90, forest: 135, mint: 150, sage: 130, jade: 145, olive: 80, leaf: 110,
+            blue: 220, ocean: 210, sky: 200, azure: 210, cobalt: 230, navy: 235, ice: 195, aqua: 185, cerulean: 200, sea: 200, water: 200,
+            cyan: 180, teal: 175, turquoise: 170,
+            purple: 280, violet: 270, lavender: 265, plum: 290, amethyst: 275, indigo: 260, lilac: 270, mauve: 285,
+            pink: 330, rose: 340, coral: 12, blush: 345, magenta: 310, fuchsia: 300, sakura: 335, cherry_blossom: 335,
+            white: 0, snow: 200, ivory: 45, cream: 40, pearl: 0, silver: 210,
+            black: 240, dark: 240, midnight: 235, shadow: 250, night: 240, obsidian: 240,
+            brown: 25, chocolate: 20, coffee: 25, earth: 30, wood: 30, cinnamon: 20,
+            rainbow: 0, colorful: 0, neon: 300, pastel: 330, tropical: 160
+        };
+
+        // ── Mood/Style Word Dictionary — maps words to bloom style modifiers ──
+        const MOOD_MAP = {
+            // chaos/gentle
+            wild: { chaos: 0.8, size: 1.2 }, calm: { chaos: 0.1, size: 0.8 }, gentle: { chaos: 0.15, size: 0.7 },
+            fierce: { chaos: 0.9, size: 1.3 }, soft: { chaos: 0.1, size: 0.7 }, serene: { chaos: 0.05, size: 0.75 },
+            chaotic: { chaos: 1.0, size: 1.1 }, peaceful: { chaos: 0.05, size: 0.8 }, crazy: { chaos: 1.0, size: 1.3 },
+            // size
+            big: { chaos: 0.5, size: 1.4 }, small: { chaos: 0.3, size: 0.5 }, tiny: { chaos: 0.2, size: 0.4 },
+            huge: { chaos: 0.6, size: 1.5 }, giant: { chaos: 0.5, size: 1.6 }, little: { chaos: 0.3, size: 0.5 },
+            // nature
+            storm: { chaos: 0.9, size: 1.2 }, rain: { chaos: 0.4, size: 0.8 }, wind: { chaos: 0.6, size: 1.0 },
+            thunder: { chaos: 1.0, size: 1.3 }, breeze: { chaos: 0.2, size: 0.8 }, sun: { chaos: 0.3, size: 1.1 },
+            moon: { chaos: 0.2, size: 0.9 }, star: { chaos: 0.4, size: 0.9 }, snow: { chaos: 0.15, size: 0.7 },
+            // emotion
+            love: { chaos: 0.2, size: 1.0 }, happy: { chaos: 0.4, size: 1.1 }, sad: { chaos: 0.2, size: 0.7 },
+            angry: { chaos: 0.9, size: 1.2 }, joy: { chaos: 0.5, size: 1.1 }, dream: { chaos: 0.3, size: 1.0 },
+            hope: { chaos: 0.25, size: 1.0 }, magic: { chaos: 0.6, size: 1.15 }, power: { chaos: 0.8, size: 1.3 },
+            // flower types
+            lotus: { chaos: 0.1, size: 0.9 }, sunflower: { chaos: 0.2, size: 1.3 }, daisy: { chaos: 0.15, size: 0.8 },
+            orchid: { chaos: 0.3, size: 1.0 }, tulip: { chaos: 0.15, size: 0.85 },
+            tropical: { chaos: 0.5, size: 1.2 }, exotic: { chaos: 0.6, size: 1.15 }
+        };
+
+        // ── Parse words into bloom parameters ──
+        function parseWordsToParams(w1, w2, w3) {
+            const words = [w1, w2, w3].map(w => w.toLowerCase().trim());
+            let hue = null, saturation = 70, lightness = 50;
+            let chaos = 0.4, sizeMod = 1.0;
+            let isRainbow = false, isPastel = false, isNeon = false, isDark = false;
+
+            for (const word of words) {
+                // Check color
+                if (COLOR_MAP[word] !== undefined) {
+                    if (word === 'rainbow' || word === 'colorful') { isRainbow = true; }
+                    else if (word === 'pastel') { isPastel = true; saturation = 40; lightness = 70; }
+                    else if (word === 'neon') { isNeon = true; saturation = 100; lightness = 55; }
+                    else if (word === 'dark' || word === 'black' || word === 'midnight' || word === 'shadow' || word === 'night') {
+                        isDark = true; lightness = 25;
+                    }
+                    else if (word === 'white' || word === 'snow' || word === 'ivory' || word === 'cream' || word === 'pearl' || word === 'silver') {
+                        saturation = 15; lightness = 85;
+                    }
+                    else { hue = COLOR_MAP[word]; }
+                }
+                // Check mood
+                if (MOOD_MAP[word]) {
+                    chaos = MOOD_MAP[word].chaos;
+                    sizeMod = MOOD_MAP[word].size;
+                }
+            }
+            return { hue, saturation, lightness, chaos, sizeMod, isRainbow, isPastel, isNeon, isDark };
+        }
+
+        // ── Seed hash ──
+        function hashSeed(str) {
+            let h = 0;
+            for (let i = 0; i < str.length; i++) h = ((h << 5) - h + str.charCodeAt(i)) | 0;
+            return Math.abs(h);
+        }
+
+        // ── Seeded random (mulberry32) ──
+        function seededRandom(seed) {
+            return function () {
+                seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+                let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+                t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                return ((t ^ t >>> 14) >>> 0) / 4294967296;
+            };
+        }
+
+        function hsl(h, s, l, a = 1) { return `hsla(${h % 360}, ${s}%, ${l}%, ${a})`; }
+
+        // ── Draw petal ──
+        function drawPetal(ctx, rand, cx, cy, angle, len, wid, c1, c2) {
+            ctx.save(); ctx.translate(cx, cy); ctx.rotate(angle);
+            const grad = ctx.createLinearGradient(0, 0, 0, -len);
+            grad.addColorStop(0, c1); grad.addColorStop(1, c2);
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            const cpX = wid * (0.6 + rand() * 0.6), cpY = len * (0.3 + rand() * 0.3);
+            ctx.moveTo(0, 0);
+            ctx.bezierCurveTo(cpX, -cpY, cpX * 0.8, -len * 0.8, 0, -len);
+            ctx.bezierCurveTo(-cpX * 0.8, -len * 0.8, -cpX, -cpY, 0, 0);
+            ctx.fill();
+            // vein
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)'; ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(0, -2); ctx.lineTo(0, -len * 0.85); ctx.stroke();
+            ctx.restore();
+        }
+
+        // ── Main bloom generator ──
+        function generateBloom(words, tideLevel, targetCanvas, size) {
+            const c = targetCanvas || canvas;
+            const cCtx = c.getContext('2d');
+            const w = size || c.width, h = size || c.height;
+            const cx = w / 2, cy = h / 2;
+
+            const combinedWord = words.join('-');
+            const seed = hashSeed(combinedWord.toLowerCase() + tideLevel);
+            const rand = seededRandom(seed);
+            const params = parseWordsToParams(words[0], words[1], words[2]);
+
+            cCtx.clearRect(0, 0, w, h);
+
+            const t = tideLevel / 100;
+            // Base hue: use detected color or generate from tide
+            let baseHue = params.hue !== null ? params.hue : (180 + t * 160 + rand() * 40);
+            const sat = params.saturation;
+            const lit = params.lightness;
+            const totalSizeMul = (0.6 + t * 0.6) * params.sizeMod;
+
+            // Bloom structure from seed + chaos
+            const petalCount = Math.floor(5 + rand() * 10 + params.chaos * 5);
+            const layers = Math.floor(1 + rand() * 3);
+            const petalLength = (40 + rand() * 50) * totalSizeMul * (w / 400);
+            const petalWidth = (14 + rand() * 20) * totalSizeMul * (w / 400);
+            const rotOff = rand() * Math.PI * 2;
+
+            // Background glow
+            const glowGrad = cCtx.createRadialGradient(cx, cy, 0, cx, cy, petalLength * 1.5);
+            glowGrad.addColorStop(0, hsl(baseHue, sat, lit, 0.15));
+            glowGrad.addColorStop(1, 'transparent');
+            cCtx.fillStyle = glowGrad; cCtx.fillRect(0, 0, w, h);
+
+            // Stem
+            const stemLen = petalLength * (0.8 + rand() * 0.6);
+            cCtx.save(); cCtx.translate(cx, cy);
+            const stemCurve = (rand() - 0.5) * 20 * (1 + params.chaos);
+            const stemGrad = cCtx.createLinearGradient(0, 0, 0, stemLen);
+            stemGrad.addColorStop(0, hsl(120 + rand() * 30, 40, 35));
+            stemGrad.addColorStop(1, hsl(120 + rand() * 30, 30, 25));
+            cCtx.strokeStyle = stemGrad; cCtx.lineWidth = 2 + rand() * 2; cCtx.lineCap = 'round';
+            cCtx.beginPath(); cCtx.moveTo(0, 0);
+            cCtx.quadraticCurveTo(stemCurve, stemLen * 0.6, stemCurve * 0.5, stemLen);
+            cCtx.stroke();
+            // Leaf
+            if (rand() > 0.3) {
+                const leafY = stemLen * (0.3 + rand() * 0.3);
+                const leafSide = rand() > 0.5 ? 1 : -1;
+                cCtx.fillStyle = hsl(120 + rand() * 40, 50, 35, 0.7);
+                cCtx.beginPath();
+                cCtx.ellipse(stemCurve * 0.5 + leafSide * 12, leafY, 8 * (w / 400), 16 * (w / 400), leafSide * 0.5, 0, Math.PI * 2);
+                cCtx.fill();
+            }
+            cCtx.restore();
+
+            // Petal layers
+            for (let la = layers - 1; la >= 0; la--) {
+                const sc = 1 - la * 0.25;
+                const cnt = Math.max(4, petalCount - la * 2);
+                for (let i = 0; i < cnt; i++) {
+                    const angle = (i / cnt) * Math.PI * 2 + rotOff + la * 0.2 + (rand() - 0.5) * params.chaos * 0.5;
+                    let petalHue;
+                    if (params.isRainbow) {
+                        petalHue = (i / cnt) * 360;
+                    } else {
+                        petalHue = baseHue + la * 20 + rand() * 30 * (1 + params.chaos);
+                    }
+                    const c1 = hsl(petalHue, sat + rand() * 15, lit - 5 + rand() * 10, 0.85);
+                    const c2 = hsl(petalHue + 20, sat + 10, lit + 15 + rand() * 10, 0.7);
+                    const pl = petalLength * sc * (0.85 + rand() * 0.3);
+                    const pw = petalWidth * sc;
+                    drawPetal(cCtx, rand, cx, cy, angle, pl, pw, c1, c2);
+                }
+            }
+
+            // Center
+            const cr = (8 + rand() * 12) * totalSizeMul * (w / 400);
+            const cGrad = cCtx.createRadialGradient(cx, cy, 0, cx, cy, cr);
+            cGrad.addColorStop(0, hsl(45 + rand() * 30, 80, 70));
+            cGrad.addColorStop(0.7, hsl(baseHue + 10, 60, 40));
+            cGrad.addColorStop(1, hsl(baseHue, 40, 30, 0.5));
+            cCtx.beginPath(); cCtx.arc(cx, cy, cr, 0, Math.PI * 2);
+            cCtx.fillStyle = cGrad; cCtx.fill();
+
+            // Sparkles based on chaos
+            const sparkleCount = Math.floor(8 + params.chaos * 20 + t * 10);
+            for (let i = 0; i < sparkleCount; i++) {
+                const sx = rand() * w, sy = rand() * h;
+                const sr = 0.5 + rand() * 1.5;
+                cCtx.beginPath(); cCtx.arc(sx, sy, sr, 0, Math.PI * 2);
+                cCtx.fillStyle = hsl(baseHue + rand() * 60, 80, 80, 0.3 + rand() * 0.4);
+                cCtx.fill();
+            }
+
+            // Tide waves at bottom
+            for (let i = 0; i < 3; i++) {
+                const waveH = 15 * (w / 400);
+                const waveY = h - waveH * (i + 1) * 0.8;
+                cCtx.beginPath(); cCtx.moveTo(0, waveY);
+                for (let x = 0; x <= w; x += 10)
+                    cCtx.lineTo(x, waveY + Math.sin((x / w) * Math.PI * (3 + i) + i) * (4 + t * 6));
+                cCtx.lineTo(w, h); cCtx.lineTo(0, h); cCtx.closePath();
+                cCtx.fillStyle = hsl(200, 70, 30 + i * 8, 0.12 - i * 0.03); cCtx.fill();
+            }
+
+            return { words: words, tideLevel, seed };
+        }
 
         // ── Wave thumb follows slider ──
         function updateWaveThumb() {
             const val = tideSlider.value;
             const pct = val / 100;
-            // Account for thumb width offset
             const sliderWidth = tideSlider.offsetWidth;
-            const thumbOffset = 18; // half of thumb width
-            const pos = pct * (sliderWidth - thumbOffset * 2) + thumbOffset;
-            waveThumb.style.left = pos + 'px';
+            const thumbOffset = 18;
+            waveThumb.style.left = (pct * (sliderWidth - thumbOffset * 2) + thumbOffset) + 'px';
             tideValueEl.textContent = `Tide: ${val}%`;
         }
         tideSlider.addEventListener('input', updateWaveThumb);
         window.addEventListener('resize', updateWaveThumb);
-        // Initial position
         setTimeout(updateWaveThumb, 50);
 
         // ── Generate Button ──
-        btnGenerate.addEventListener('click', async () => {
-            const w1 = word1Input.value.trim();
-            const w2 = word2Input.value.trim();
-            const w3 = word3Input.value.trim();
-
-            if (!w1 || !w2 || !w3) {
+        btnGenerate.addEventListener('click', () => {
+            const words = [w1Input.value.trim(), w2Input.value.trim(), w3Input.value.trim()];
+            if (!words[0] || !words[1] || !words[2]) {
                 showToast('Please enter all 3 words!', 'error');
-                if (!w1) word1Input.focus();
-                else if (!w2) word2Input.focus();
-                else word3Input.focus();
+                if (!words[0]) w1Input.focus(); else if (!words[1]) w2Input.focus(); else w3Input.focus();
                 return;
             }
-
-            const tideLevel = parseInt(tideSlider.value);
-
-            // Show loading state
-            btnGenerate.disabled = true;
-            btnGenerate.textContent = '⏳ AI is generating…';
             placeholder.classList.add('hidden');
-            loadingEl.classList.add('active');
+            currentBloom = generateBloom(words, parseInt(tideSlider.value));
+            btnSave.disabled = false;
+            showToast('🌸 Bloom generated! Try different words for different flowers.', 'success');
+        });
 
-            // Remove any existing bloom image
-            const existingImg = bloomDisplay.querySelector('img');
-            if (existingImg) existingImg.remove();
+        // Enter key
+        [w1Input, w2Input, w3Input].forEach(inp => {
+            inp.addEventListener('keydown', e => { if (e.key === 'Enter') btnGenerate.click(); });
+        });
 
+        // ── Save ──
+        btnSave.addEventListener('click', async () => {
+            if (!currentBloom) return;
+            btnSave.disabled = true;
             try {
-                const res = await fetch('/api/generate-bloom', {
+                const res = await fetch('/api/blooms', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ word1: w1, word2: w2, word3: w3, tideLevel })
+                    body: JSON.stringify(currentBloom)
                 });
                 const data = await res.json();
-
-                if (data.success && data.image) {
-                    // Show the AI-generated image
-                    loadingEl.classList.remove('active');
-                    const img = document.createElement('img');
-                    img.src = data.image;
-                    img.alt = `AI Bloom: ${w1}, ${w2}, ${w3}`;
-                    bloomDisplay.appendChild(img);
-                    showToast('🌸 Bloom created by AI!', 'success');
-                    loadGallery(); // Refresh gallery
+                if (data.success) {
+                    showToast('💾 Saved to gallery!', 'success');
+                    loadGallery();
                 } else {
-                    loadingEl.classList.remove('active');
-                    placeholder.classList.remove('hidden');
-                    showToast(data.error || 'Failed to generate bloom.', 'error');
+                    showToast(data.error || 'Save failed.', 'error');
+                    btnSave.disabled = false;
                 }
-            } catch (err) {
-                loadingEl.classList.remove('active');
-                placeholder.classList.remove('hidden');
-                showToast('Could not connect to server.', 'error');
-            } finally {
-                btnGenerate.disabled = false;
-                btnGenerate.textContent = '🌸 Generate Bloom with AI';
+            } catch {
+                showToast('Could not save.', 'error');
+                btnSave.disabled = false;
             }
         });
 
-        // Also generate on Enter key
-        [word1Input, word2Input, word3Input].forEach(input => {
-            input.addEventListener('keydown', e => {
-                if (e.key === 'Enter') btnGenerate.click();
-            });
-        });
-
-        // ── Load Gallery ──
+        // ── Gallery ──
         async function loadGallery() {
             try {
                 const res = await fetch('/api/blooms');
@@ -805,28 +931,22 @@
                 if (data.blooms && data.blooms.length > 0) {
                     emptyGallery.style.display = 'none';
                     bloomGrid.querySelectorAll('.bloom-item').forEach(el => el.remove());
-
-                    data.blooms.slice(-12).reverse().forEach(bloom => {
+                    data.blooms.slice(-12).reverse().forEach(b => {
                         const item = document.createElement('div');
                         item.className = 'bloom-item';
-
-                        const img = document.createElement('img');
-                        img.src = `/api/blooms/img/${bloom.image}`;
-                        img.alt = `Bloom: ${(bloom.words || []).join(', ')}`;
-                        img.loading = 'lazy';
-                        item.appendChild(img);
-
-                        const wordsDiv = document.createElement('div');
-                        wordsDiv.className = 'bi-words';
-                        wordsDiv.textContent = (bloom.words || []).join(' · ');
-                        item.appendChild(wordsDiv);
-
-                        const tideDiv = document.createElement('div');
-                        tideDiv.className = 'bi-tide';
-                        tideDiv.textContent = `🌊 Tide: ${bloom.tideLevel}%`;
-                        item.appendChild(tideDiv);
-
+                        const mc = document.createElement('canvas');
+                        mc.width = 160; mc.height = 160;
+                        item.appendChild(mc);
+                        const wd = document.createElement('div');
+                        wd.className = 'bi-words';
+                        wd.textContent = (b.words || [b.word]).join(' · ');
+                        item.appendChild(wd);
+                        const td = document.createElement('div');
+                        td.className = 'bi-tide';
+                        td.textContent = `🌊 Tide: ${b.tideLevel}%`;
+                        item.appendChild(td);
                         bloomGrid.appendChild(item);
+                        generateBloom(b.words || [b.word, '', ''], b.tideLevel, mc, 160);
                     });
                 }
             } catch { }
@@ -841,7 +961,6 @@
             setTimeout(() => t.classList.remove('visible'), 4000);
         }
 
-        // Load gallery on page load
         loadGallery();
     </script>
 </body>

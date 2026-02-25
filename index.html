@@ -500,31 +500,53 @@
 
   <script src="script.js"></script>
   <script>
+    // ── Color + Mood maps for gallery rendering ──
+    const COLOR_MAP = { red: 0, crimson: 350, scarlet: 5, ruby: 355, fire: 15, flame: 20, orange: 30, amber: 35, yellow: 55, gold: 50, golden: 50, lemon: 55, sunshine: 50, green: 120, emerald: 140, lime: 90, forest: 135, mint: 150, blue: 220, ocean: 210, sky: 200, azure: 210, navy: 235, ice: 195, aqua: 185, sea: 200, water: 200, cyan: 180, teal: 175, turquoise: 170, purple: 280, violet: 270, lavender: 265, indigo: 260, pink: 330, rose: 340, coral: 12, magenta: 310, white: 0, snow: 200, black: 240, dark: 240, midnight: 235, brown: 25, rainbow: 0, neon: 300, pastel: 330, tropical: 160 };
+    const MOOD_MAP = { wild: { c: .8, s: 1.2 }, calm: { c: .1, s: .8 }, gentle: { c: .15, s: .7 }, fierce: { c: .9, s: 1.3 }, soft: { c: .1, s: .7 }, serene: { c: .05, s: .75 }, chaotic: { c: 1, s: 1.1 }, peaceful: { c: .05, s: .8 }, big: { c: .5, s: 1.4 }, small: { c: .3, s: .5 }, huge: { c: .6, s: 1.5 }, storm: { c: .9, s: 1.2 }, rain: { c: .4, s: .8 }, wind: { c: .6, s: 1 }, sun: { c: .3, s: 1.1 }, moon: { c: .2, s: .9 }, love: { c: .2, s: 1 }, happy: { c: .4, s: 1.1 }, magic: { c: .6, s: 1.15 }, power: { c: .8, s: 1.3 }, tropical: { c: .5, s: 1.2 } };
+    function parseW(ws) { let h = null, s = 70, l = 50, ch = .4, sm = 1, rb = false; ws.forEach(w => { w = w.toLowerCase(); if (COLOR_MAP[w] !== undefined) { if (w === 'rainbow') rb = true; else h = COLOR_MAP[w] } if (MOOD_MAP[w]) { ch = MOOD_MAP[w].c; sm = MOOD_MAP[w].s } }); return { h, s, l, ch, sm, rb } }
+    function hs(str) { let h = 0; for (let i = 0; i < str.length; i++)h = ((h << 5) - h + str.charCodeAt(i)) | 0; return Math.abs(h) }
+    function sr(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296 } }
+    function hl(h, s, l, a = 1) { return `hsla(${h % 360},${s}%,${l}%,${a})` }
+    function drawMiniBloom(c, words, tideLevel) {
+      const x = c.getContext('2d'), w = c.width, h = c.height, cx = w / 2, cy = h / 2;
+      const seed = hs(words.join('-').toLowerCase() + tideLevel), rand = sr(seed), p = parseW(words);
+      x.clearRect(0, 0, w, h); const t = tideLevel / 100;
+      let bh = p.h !== null ? p.h : (180 + t * 160 + rand() * 40);
+      const sm = (0.6 + t * 0.6) * p.sm, pc = Math.floor(5 + rand() * 10 + p.ch * 5), la = Math.floor(1 + rand() * 3);
+      const pl = (40 + rand() * 50) * sm * (w / 400), pw = (14 + rand() * 20) * sm * (w / 400), ro = rand() * Math.PI * 2;
+      const gg = x.createRadialGradient(cx, cy, 0, cx, cy, pl * 1.5);
+      gg.addColorStop(0, hl(bh, p.s, p.l, .15)); gg.addColorStop(1, 'transparent'); x.fillStyle = gg; x.fillRect(0, 0, w, h);
+      for (let l2 = la - 1; l2 >= 0; l2--) {
+        const sc = 1 - l2 * .25, cn = Math.max(4, pc - l2 * 2);
+        for (let i = 0; i < cn; i++) {
+          const ag = (i / cn) * Math.PI * 2 + ro + l2 * .2;
+          let ph = p.rb ? (i / cn) * 360 : bh + l2 * 20 + rand() * 30;
+          const c1 = hl(ph, p.s + rand() * 15, p.l - 5 + rand() * 10, .85), c2 = hl(ph + 20, p.s + 10, p.l + 15 + rand() * 10, .7);
+          const pll = pl * sc * (.85 + rand() * .3), pww = pw * sc;
+          x.save(); x.translate(cx, cy); x.rotate(ag);
+          const gr = x.createLinearGradient(0, 0, 0, -pll); gr.addColorStop(0, c1); gr.addColorStop(1, c2); x.fillStyle = gr;
+          x.beginPath(); const cpX = pww * (.6 + rand() * .6), cpY = pll * (.3 + rand() * .3);
+          x.moveTo(0, 0); x.bezierCurveTo(cpX, -cpY, cpX * .8, -pll * .8, 0, -pll);
+          x.bezierCurveTo(-cpX * .8, -pll * .8, -cpX, -cpY, 0, 0); x.fill(); x.restore()
+        }
+      }
+      const cr = (8 + rand() * 12) * sm * (w / 400), cg = x.createRadialGradient(cx, cy, 0, cx, cy, cr);
+      cg.addColorStop(0, hl(45 + rand() * 30, 80, 70)); cg.addColorStop(.7, hl(bh + 10, 60, 40)); cg.addColorStop(1, hl(bh, 40, 30, .5));
+      x.beginPath(); x.arc(cx, cy, cr, 0, Math.PI * 2); x.fillStyle = cg; x.fill()
+    }
     async function loadCommunityGallery() {
       try {
-        const res = await fetch('/api/blooms');
-        const data = await res.json();
-        const grid = document.getElementById('community-gallery');
-        const empty = document.getElementById('btg-empty');
+        const res = await fetch('/api/blooms'); const data = await res.json();
+        const grid = document.getElementById('community-gallery'); const empty = document.getElementById('btg-empty');
         if (data.blooms && data.blooms.length > 0) {
           empty.style.display = 'none';
           data.blooms.slice(-12).reverse().forEach(b => {
-            const item = document.createElement('div');
-            item.className = 'bloom-gallery-item';
-            const img = document.createElement('img');
-            img.src = `/api/blooms/img/${b.image}`;
-            img.alt = `Bloom: ${(b.words || []).join(', ')}`;
-            img.loading = 'lazy';
-            img.style.cssText = 'width:100%;border-radius:12px;aspect-ratio:1;object-fit:cover;margin-bottom:8px;background:rgba(0,0,0,.2)';
-            item.appendChild(img);
-            const wd = document.createElement('div');
-            wd.className = 'bgi-word'; wd.textContent = (b.words || []).join(' · ');
-            item.appendChild(wd);
-            const td = document.createElement('div');
-            td.className = 'bgi-tide'; td.textContent = `🌊 Tide: ${b.tideLevel}%`;
-            item.appendChild(td);
-            grid.appendChild(item);
-          });
+            const item = document.createElement('div'); item.className = 'bloom-gallery-item';
+            const mc = document.createElement('canvas'); mc.width = 160; mc.height = 160; item.appendChild(mc);
+            const wd = document.createElement('div'); wd.className = 'bgi-word'; wd.textContent = (b.words || []).join(' · '); item.appendChild(wd);
+            const td = document.createElement('div'); td.className = 'bgi-tide'; td.textContent = `🌊 Tide: ${b.tideLevel}%`; item.appendChild(td);
+            grid.appendChild(item); drawMiniBloom(mc, b.words || [], b.tideLevel)
+          })
         }
       } catch { }
     }
